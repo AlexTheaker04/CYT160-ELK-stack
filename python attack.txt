@@ -1,0 +1,24 @@
+import paho.mqtt.client as mqtt
+import time
+import json
+import random
+
+BROKER = "34.227.178.72"
+PORT = 1883
+TOPIC = "sensor/temperature"
+
+def main():
+    client = mqtt.Client()
+    client.connect(BROKER, PORT, 60)
+    while True:
+        temperature = round(random.uniform(20.0, 30.0), 2)
+        payload = {
+            "temperature": temperature,
+            "timestamp": time.time()
+        }
+        client.publish(TOPIC, json.dumps(payload))
+        print(f"Published: {payload}")
+        time.sleep(5)
+
+if name == "main":
+    main()
